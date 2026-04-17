@@ -10,7 +10,15 @@ public class SerpApiHttpFeeder {
         OkHttpClient client = new OkHttpClient();
 
         String apiKey = "REMOVED";
-        String url = "https://serpapi.com/search.json?q=google&api_key=" + apiKey;
+        String url = "https://serpapi.com/search.json"
+                + "?engine=google_flights"
+                + "&departure_id=LPA"
+                + "&arrival_id=MAD"
+                + "&outbound_date=2026-05-10"
+                + "&type=2"
+                + "&currency=EUR"
+                + "&hl=es"
+                + "&api_key=" + apiKey;
 
         Request request = new Request.Builder()
                 .url(url)
