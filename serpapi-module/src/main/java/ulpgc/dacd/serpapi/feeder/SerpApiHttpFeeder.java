@@ -9,7 +9,7 @@ public class SerpApiHttpFeeder {
     public String getData() {
         OkHttpClient client = new OkHttpClient();
 
-        String apiKey = "REMOVED";
+        String apiKey = System.getenv("SERPAPI_KEY");
         String url = "https://serpapi.com/search.json"
                 + "?engine=google_flights"
                 + "&departure_id=LPA"

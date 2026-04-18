@@ -13,8 +13,15 @@ public class SerpApiMain {
         Trip trip = mapper.map(response);
 
         System.out.println("Price: " + trip.getPrice());
+        System.out.println("Type: " + trip.getType());
         System.out.println("Airline: " + trip.getAirline());
-        System.out.println("Departure: " + trip.getDepartureTime());
-        System.out.println("Arrival: " + trip.getArrivalTime());
+        System.out.println("Flight number: " + trip.getFlightNumber());
+        System.out.println("Departure airport: " + trip.getDepartureAirportId());
+        System.out.println("Departure time: " + trip.getDepartureTime());
+        System.out.println("Arrival airport: " + trip.getArrivalAirportId());
+        System.out.println("Arrival time: " + trip.getArrivalTime());
+        System.out.println("Duration: " + trip.getDuration());
+        System.out.println("Total duration: " + trip.getTotalDuration());
+        System.out.println("Travel class: " + trip.getTravelClass());
     }
 }
