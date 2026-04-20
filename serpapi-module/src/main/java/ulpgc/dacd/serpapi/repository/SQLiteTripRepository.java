@@ -20,20 +20,21 @@ public class SQLiteTripRepository implements TripRepository {
     @Override
     public void save(Trip trip) throws SQLException {
         String sql = """
-                INSERT INTO trips (
-                    price,
-                    type,
-                    airline,
-                    flight_number,
-                    departure_airport_id,
-                    departure_time,
-                    arrival_airport_id,
-                    arrival_time,
-                    duration,
-                    total_duration,
-                    travel_class
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+        INSERT INTO trips (
+            price,
+            type,
+            airline,
+            flight_number,
+            departure_airport_id,
+            departure_time,
+            arrival_airport_id,
+            arrival_time,
+            duration,
+            total_duration,
+            travel_class,
+            captured_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
         try (Connection connection = database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -49,6 +50,7 @@ public class SQLiteTripRepository implements TripRepository {
             statement.setInt(9, trip.getDuration());
             statement.setInt(10, trip.getTotalDuration());
             statement.setString(11, trip.getTravelClass());
+            statement.setString(12, java.time.LocalDateTime.now().toString());
 
             statement.executeUpdate();
         }
@@ -74,6 +76,7 @@ public class SQLiteTripRepository implements TripRepository {
                 System.out.println("Duration: " + resultSet.getInt("duration"));
                 System.out.println("Total duration: " + resultSet.getInt("total_duration"));
                 System.out.println("Travel class: " + resultSet.getString("travel_class"));
+                System.out.println("Captured at: " + resultSet.getString("captured_at"));
                 System.out.println("-----");
             }
         }

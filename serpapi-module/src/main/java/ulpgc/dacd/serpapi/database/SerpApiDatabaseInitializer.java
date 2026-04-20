@@ -27,7 +27,9 @@ public class SerpApiDatabaseInitializer {
                     arrival_time TEXT NOT NULL,
                     duration INTEGER NOT NULL,
                     total_duration INTEGER NOT NULL,
-                    travel_class TEXT NOT NULL
+                    travel_class TEXT NOT NULL,
+                    captured_at TEXT NOT NULL
+                
                 );
                 """;
 
