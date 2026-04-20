@@ -10,28 +10,19 @@ import java.util.List;
 
 public class SerpApiMain {
     public static void main(String[] args) {
-        try {
-            SerpApiDatabaseInitializer db = new SerpApiDatabaseInitializer();
-            db.initialize();
+        SerpApiDatabaseInitializer db = new SerpApiDatabaseInitializer();
+        db.initialize();
 
-            SerpApiHttpFeeder feeder = new SerpApiHttpFeeder();
-            String response = feeder.getData("LPA", "MAD", "2026-05-10");
+        SerpApiHttpFeeder feeder = new SerpApiHttpFeeder();
+        String response = feeder.getData("LPA", "MAD", "2026-05-10");
 
-            TripMapper mapper = new TripMapper();
-            List<Trip> trips = mapper.map(response);
+        TripMapper mapper = new TripMapper();
+        List<Trip> trips = mapper.map(response);
 
-            SQLiteTripRepository repository = new SQLiteTripRepository(db);
+        SQLiteTripRepository repository = new SQLiteTripRepository(db);
 
-            for (Trip trip : trips) {
-                repository.save(trip);
-            }
-
-            System.out.println("Trips guardados: " + trips.size());
-
-            repository.findAll();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (Trip trip : trips) {
+            repository.save(trip);
         }
     }
 }

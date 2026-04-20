@@ -6,8 +6,8 @@ import ulpgc.dacd.serpapi.model.Trip;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 public class SQLiteTripRepository implements TripRepository {
 
@@ -18,23 +18,23 @@ public class SQLiteTripRepository implements TripRepository {
     }
 
     @Override
-    public void save(Trip trip) throws SQLException {
+    public void save(Trip trip) {
         String sql = """
-        INSERT INTO trips (
-            price,
-            type,
-            airline,
-            flight_number,
-            departure_airport_id,
-            departure_time,
-            arrival_airport_id,
-            arrival_time,
-            duration,
-            total_duration,
-            travel_class,
-            captured_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+                INSERT INTO trips (
+                    price,
+                    type,
+                    airline,
+                    flight_number,
+                    departure_airport_id,
+                    departure_time,
+                    arrival_airport_id,
+                    arrival_time,
+                    duration,
+                    total_duration,
+                    travel_class,
+                    captured_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try (Connection connection = database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -50,13 +50,15 @@ public class SQLiteTripRepository implements TripRepository {
             statement.setInt(9, trip.getDuration());
             statement.setInt(10, trip.getTotalDuration());
             statement.setString(11, trip.getTravelClass());
-            statement.setString(12, java.time.LocalDateTime.now().toString());
+            statement.setString(12, LocalDateTime.now().toString());
 
             statement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Error saving trip", e);
         }
     }
 
-    public void findAll() throws SQLException {
+    public void findAll() {
         String sql = "SELECT * FROM trips";
 
         try (Connection connection = database.connect();
@@ -79,6 +81,8 @@ public class SQLiteTripRepository implements TripRepository {
                 System.out.println("Captured at: " + resultSet.getString("captured_at"));
                 System.out.println("-----");
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading trips", e);
         }
     }
 }

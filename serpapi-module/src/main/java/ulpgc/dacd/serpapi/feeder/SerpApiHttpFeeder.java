@@ -6,16 +6,13 @@ import okhttp3.Response;
 
 public class SerpApiHttpFeeder {
 
-    public String getData(String departure, String arrival, String date) {
-        OkHttpClient client = new OkHttpClient();
+    private static final String BASE_URL = "https://serpapi.com/search.json";
+    private final OkHttpClient client = new OkHttpClient();
 
+    public String getData(String departure, String arrival, String date) {
         String apiKey = System.getenv("SERPAPI_KEY");
 
-        if (apiKey == null || apiKey.isBlank()) {
-            throw new RuntimeException("La variable de entorno SERPAPI_KEY no está definida.");
-        }
-
-        String url = "https://serpapi.com/search.json"
+        String url = BASE_URL
                 + "?engine=google_flights"
                 + "&departure_id=" + departure
                 + "&arrival_id=" + arrival
@@ -30,12 +27,9 @@ public class SerpApiHttpFeeder {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (response.body() == null) {
-                throw new RuntimeException("La respuesta de la API no tiene body.");
-            }
             return response.body().string();
         } catch (Exception e) {
-            throw new RuntimeException("Error al consultar SerpApi", e);
+            throw new RuntimeException(e);
         }
     }
 }

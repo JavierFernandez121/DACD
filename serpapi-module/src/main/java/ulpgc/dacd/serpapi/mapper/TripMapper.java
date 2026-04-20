@@ -16,8 +16,12 @@ public class TripMapper {
         JsonArray bestFlights = root.getAsJsonArray("best_flights");
         List<Trip> trips = new ArrayList<>();
 
-        for (int i = 0; i < bestFlights.size(); i++) {
-            JsonObject option = bestFlights.get(i).getAsJsonObject();
+        if (bestFlights == null || bestFlights.isEmpty()) {
+            return trips;
+        }
+
+        for (var element : bestFlights) {
+            JsonObject option = element.getAsJsonObject();
 
             double price = option.get("price").getAsDouble();
             String type = option.get("type").getAsString();
@@ -41,7 +45,7 @@ public class TripMapper {
             String arrivalAirportId = arrivalAirport.get("id").getAsString();
             String arrivalTime = arrivalAirport.get("time").getAsString();
 
-            Trip trip = new Trip(
+            trips.add(new Trip(
                     price,
                     type,
                     airline,
@@ -53,9 +57,7 @@ public class TripMapper {
                     duration,
                     totalDuration,
                     travelClass
-            );
-
-            trips.add(trip);
+            ));
         }
 
         return trips;

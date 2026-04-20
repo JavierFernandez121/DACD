@@ -2,18 +2,21 @@ package ulpgc.dacd.serpapi.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SerpApiDatabaseInitializer {
 
-    private static final String DATABASE_URL = "jdbc:sqlite:serpapi.db";
+    private static final String URL = "jdbc:sqlite:serpapi.db";
 
-    public Connection connect() throws SQLException {
-        return DriverManager.getConnection(DATABASE_URL);
+    public Connection connect() {
+        try {
+            return DriverManager.getConnection(URL);
+        } catch (Exception e) {
+            throw new RuntimeException("Error connecting to database", e);
+        }
     }
 
-    public void initialize() throws SQLException {
+    public void initialize() {
         String sql = """
                 CREATE TABLE IF NOT EXISTS trips (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,13 +32,14 @@ public class SerpApiDatabaseInitializer {
                     total_duration INTEGER NOT NULL,
                     travel_class TEXT NOT NULL,
                     captured_at TEXT NOT NULL
-                
                 );
                 """;
 
         try (Connection connection = connect();
              Statement statement = connection.createStatement()) {
             statement.execute(sql);
+        } catch (Exception e) {
+            throw new RuntimeException("Error initializing database", e);
         }
     }
 }

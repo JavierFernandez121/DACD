@@ -30,47 +30,26 @@ public class Trip {
         this.travelClass = travelClass;
     }
 
-    public double getPrice() {
-        return price;
-    }
+    public double getPrice() { return price; }
+    public String getType() { return type; }
+    public String getAirline() { return airline; }
+    public String getFlightNumber() { return flightNumber; }
+    public String getDepartureAirportId() { return departureAirportId; }
+    public String getDepartureTime() { return departureTime; }
+    public String getArrivalAirportId() { return arrivalAirportId; }
+    public String getArrivalTime() { return arrivalTime; }
+    public int getDuration() { return duration; }
+    public int getTotalDuration() { return totalDuration; }
+    public String getTravelClass() { return travelClass; }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getAirline() {
-        return airline;
-    }
-
-    public String getFlightNumber() {
-        return flightNumber;
-    }
-
-    public String getDepartureAirportId() {
-        return departureAirportId;
-    }
-
-    public String getDepartureTime() {
-        return departureTime;
-    }
-
-    public String getArrivalAirportId() {
-        return arrivalAirportId;
-    }
-
-    public String getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public int getTotalDuration() {
-        return totalDuration;
-    }
-
-    public String getTravelClass() {
-        return travelClass;
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "price=" + price +
+                ", airline='" + airline + '\'' +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", departure='" + departureAirportId + " " + departureTime + '\'' +
+                ", arrival='" + arrivalAirportId + " " + arrivalTime + '\'' +
+                '}';
     }
 }
