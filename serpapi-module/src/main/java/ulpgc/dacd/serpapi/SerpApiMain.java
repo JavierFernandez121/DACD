@@ -6,6 +6,8 @@ import ulpgc.dacd.serpapi.mapper.TripMapper;
 import ulpgc.dacd.serpapi.model.Trip;
 import ulpgc.dacd.serpapi.repository.SQLiteTripRepository;
 
+import java.util.List;
+
 public class SerpApiMain {
     public static void main(String[] args) {
         try {
@@ -13,15 +15,19 @@ public class SerpApiMain {
             db.initialize();
 
             SerpApiHttpFeeder feeder = new SerpApiHttpFeeder();
-            String response = feeder.getData("MAD", "BCN", "2026-05-10");
+            String response = feeder.getData("LPA", "MAD", "2026-05-10");
 
             TripMapper mapper = new TripMapper();
-            Trip trip = mapper.map(response);
+            List<Trip> trips = mapper.map(response);
 
             SQLiteTripRepository repository = new SQLiteTripRepository(db);
-            repository.save(trip);
 
-            System.out.println("Trip guardado");
+            for (Trip trip : trips) {
+                repository.save(trip);
+            }
+
+            System.out.println("Trips guardados: " + trips.size());
+
             repository.findAll();
 
         } catch (Exception e) {
