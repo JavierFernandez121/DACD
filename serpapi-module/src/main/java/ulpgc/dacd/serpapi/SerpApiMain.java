@@ -13,7 +13,7 @@ public class SerpApiMain {
             db.initialize();
 
             SerpApiHttpFeeder feeder = new SerpApiHttpFeeder();
-            String response = feeder.getData();
+            String response = feeder.getData("MAD", "BCN", "2026-05-10");
 
             TripMapper mapper = new TripMapper();
             Trip trip = mapper.map(response);
@@ -21,8 +21,9 @@ public class SerpApiMain {
             SQLiteTripRepository repository = new SQLiteTripRepository(db);
             repository.save(trip);
 
-            System.out.println("Trip guardado en la base de datos");
+            System.out.println("Trip guardado");
             repository.findAll();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
