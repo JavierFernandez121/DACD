@@ -10,9 +10,11 @@ import java.time.Duration;
 public class GasStationsApiFeeder implements GasStationsFeeder {
 
     private static final String API_URL =
-            "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/";
+            "https://energia.serviciosmin.gob.es/ServiciosRestCarburantes/PreciosCarburantes/EstacionesTerrestres/";
+
     @Override
     public String fetch() {
+
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(30))
                 .build();
@@ -21,7 +23,7 @@ public class GasStationsApiFeeder implements GasStationsFeeder {
                 .uri(URI.create(API_URL))
                 .header("Accept", "application/json")
                 .header("User-Agent", "Mozilla/5.0")
-                .timeout(Duration.ofSeconds(90))
+                .timeout(Duration.ofSeconds(120))
                 .GET()
                 .build();
 

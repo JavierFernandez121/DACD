@@ -1,4 +1,9 @@
 package ulpgc.dacd.gasstations.repository;
 
-public class GasStationRepository {
+import ulpgc.dacd.gasstations.model.GasStation;
+
+import java.util.List;
+
+public interface GasStationRepository {
+    void saveAll(List<GasStation> stations);
 }
