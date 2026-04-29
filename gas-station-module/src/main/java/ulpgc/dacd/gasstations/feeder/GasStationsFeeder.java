@@ -1,4 +1,5 @@
 package ulpgc.dacd.gasstations.feeder;
 
-public class GasStationsFeeder {
+public interface GasStationsFeeder {
+    String fetch();
 }
